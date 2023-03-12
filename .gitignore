@@ -1,0 +1,9 @@
+target/
+.idea/
+.mvn/
+lib/
+
+HELP.md
+logs.log
+mvnw
+mvnw.cmd
