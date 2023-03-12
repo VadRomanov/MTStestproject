@@ -1,29 +1,28 @@
 package ru.mtsbank.testproject.data;
 
 import jakarta.validation.constraints.NotNull;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
 
-@Table(name = "ACCOUNTS")
 public class Account {
 
-    @Id
-    private Long accountNumber;
+    private Integer accountNumber;
     @NotNull
     private Integer accountCurrency;
     @NotNull
     private Integer clientId;
+
+    public Account() {
+    }
 
     public Account(Integer accountCurrency, Integer clientId) {
         this.accountCurrency = accountCurrency;
         this.clientId = clientId;
     }
 
-    public Long getAccountNumber() {
+    public Integer getAccountNumber() {
         return accountNumber;
     }
 
-    public void setAccountNumber(Long accountNumber) {
+    public void setAccountNumber(Integer accountNumber) {
         this.accountNumber = accountNumber;
     }
 

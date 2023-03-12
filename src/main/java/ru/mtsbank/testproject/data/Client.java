@@ -2,17 +2,12 @@ package ru.mtsbank.testproject.data;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.MappedCollection;
-import org.springframework.data.relational.core.mapping.Table;
 
 import java.sql.Date;
 import java.util.List;
 
-@Table(name = "CLIENTS")
 public class Client {
 
-    @Id
     private Integer id;
     @NotEmpty(message = "Lastname should not be empty")
     private String lastName;
@@ -27,8 +22,10 @@ public class Client {
     @NotEmpty(message = "Series and document number should not be empty")
     @NotNull
     private Date dateOfBirth;
-    @MappedCollection(keyColumn = "ACCOUNT_NUMBER", idColumn = "CLIENT_ID")
     private List<Account> accounts;
+
+    public Client() {
+    }
 
     public Client(String lastName, String firstName, String patronymic, String documentType, String seriesAndDocumentNumber, Date dateOfBirth) {
         this.lastName = lastName;
