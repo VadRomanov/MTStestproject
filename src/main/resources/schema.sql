@@ -1,9 +1,9 @@
-drop table if exists CLIENTS;
-drop table if exists ACCOUNTS;
+drop table if exists Client;
+drop table if exists Account;
 
-create table CLIENTS
+create table Client
 (
-    ID                         int auto_increment primary key,
+    ID                         int not null auto_increment primary key,
     LAST_NAME                  varchar(255) not null,
     FIRST_NAME                 varchar(255) not null,
     PATRONYMIC                 varchar(255) not null,
@@ -12,12 +12,12 @@ create table CLIENTS
     DATE_OF_BIRTH              date         not null
 );
 
-create table ACCOUNTS
+create table Account
 (
     ACCOUNT_NUMBER   bigint auto_increment primary key,
     ACCOUNT_CURRENCY int not null,
     CLIENT_ID        int not null
 );
 
-alter table ACCOUNTS
-    add foreign key (CLIENT_ID) references CLIENTS (ID)
+alter table Account
+    add foreign key (CLIENT_ID) references Client (ID)

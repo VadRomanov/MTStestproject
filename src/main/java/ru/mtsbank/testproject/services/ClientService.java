@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.mtsbank.testproject.config.PermissibleValuesConfig;
+import ru.mtsbank.testproject.dao.ClientDAO;
 import ru.mtsbank.testproject.data.Account;
 import ru.mtsbank.testproject.data.Client;
-import ru.mtsbank.testproject.repositories.ClientRep;
 
 import java.sql.Date;
 import java.util.List;
@@ -19,14 +19,14 @@ public class ClientService {
     @Autowired
     private PermissibleValuesConfig permissibleValuesConfig;
     @Autowired
-    private ClientRep clientRep;
+    private ClientDAO clientDAO;
 
     public Integer saveClient(String lastName, String firstName, String patronymic, String documentType,
                          String seriesAndDocumentNumber, String dateOfBirth){
         for (String docType : permissibleValuesConfig.getDocumentTypes()) {
             if (documentType.equals(docType)) {
-                return clientRep.save(new Client(lastName, firstName, patronymic, documentType,
-                                          seriesAndDocumentNumber, Date.valueOf(dateOfBirth))).getId();
+                return clientDAO.save(lastName, firstName, patronymic, documentType,
+                                          seriesAndDocumentNumber, Date.valueOf(dateOfBirth));
             }
         }
         logger.error(documentType + " document type is not supported");
@@ -34,14 +34,14 @@ public class ClientService {
     }
 
     public List<Client> getClients() {
-        return clientRep.findAll();
+        return clientDAO.findAll();
     }
 
     public List<Account> getAccountsOfClient(Integer id) {
-        return clientRep.findById(id).get().getAccounts();
+        return clientDAO.findAccsById(id);
     }
 
     public void deleteClient(Integer id) {
-        clientRep.deleteById(id);
+        clientDAO.deleteById(id);
     }
 }

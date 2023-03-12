@@ -11,13 +11,13 @@ public class AccountsController {
     private AccountService accountService;
 
     @PostMapping
-    public Long createAccount(@RequestParam("accountCurrency") Integer accountCurrency,
+    public Integer createAccount(@RequestParam("accountCurrency") Integer accountCurrency,
                               @RequestParam("clientId") Integer clientId) {
         return accountService.saveAccount(accountCurrency, clientId);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAccount(@PathVariable("id") Long id) {
+    public void deleteAccount(@PathVariable("id") Integer id) {
         accountService.deleteAccount(id);
     }
 }

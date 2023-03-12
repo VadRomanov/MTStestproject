@@ -5,8 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.mtsbank.testproject.config.PermissibleValuesConfig;
-import ru.mtsbank.testproject.data.Account;
-import ru.mtsbank.testproject.repositories.AccountRep;
+import ru.mtsbank.testproject.dao.AccountDAO;
 
 @Service
 public class AccountService {
@@ -15,19 +14,20 @@ public class AccountService {
     @Autowired
     private PermissibleValuesConfig permissibleValuesConfig;
     @Autowired
-    private AccountRep accountRep;
+    private AccountDAO accountDAO;
 
-    public Long saveAccount(Integer accountCurrency, Integer clientId) {
+    public Integer saveAccount(Integer accountCurrency, Integer clientId) {
+
         for (Integer currency : permissibleValuesConfig.getCurrency()) {
             if (accountCurrency.equals(currency)) {
-                return accountRep.save(new Account(accountCurrency, clientId)).getAccountNumber();
+                return accountDAO.save(accountCurrency, clientId);
             }
         }
         logger.error(accountCurrency + " currency is not supported");
         return null;
     }
 
-    public void deleteAccount(Long id) {
-        accountRep.deleteById(id);
+    public void deleteAccount(Integer id) {
+        accountDAO.deleteById(id);
     }
 }
